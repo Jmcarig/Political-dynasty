@@ -1,0 +1,768 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Political Dynasties in the Philippines — Enhanced</title>
+<style>
+:root{
+  --accent:#0b67a3;
+  --accent-light:#13a0e6;
+  --muted:#6b7280;
+  --bg:#eef3f8;
+  --card:#ffffff;
+  --gradient:linear-gradient(135deg, var(--accent), var(--accent-light));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+  background:var(--bg);
+  color:#0f172a;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+/* Header + Navbar */
+header{
+  background:linear-gradient(135deg, var(--accent), var(--accent-light));
+  color:white;
+  padding:15px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+.container{max-width:1200px;margin:auto;padding:0 20px}
+.brand{display:flex;align-items:center;gap:14px}
+.brand-logo{
+  width:50px;height:50px;background:rgba(255,255,255,0.15);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:800;border-radius:10px
+}
+nav{
+  display:flex;
+  align-items:center;
+}
+nav ul{
+  list-style:none;
+  display:flex;
+  gap:20px;
+  font-size:18px;
+  margin-left:auto;
+}
+nav a{
+  text-decoration:none;
+  color:white;
+  font-weight:600;
+  padding:6px 10px;
+  border-radius:6px;
+  transition:0.3s;
+}
+nav a:hover{background:rgba(255,255,255,0.18);}
+.menu-toggle{
+  display:none;
+  background:none;
+  border:2px solid white;
+  padding:6px 10px;
+  border-radius:6px;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+/* Mobile */
+@media(max-width:880px){
+  .menu-toggle{display:block;}
+  nav ul{
+    display:none;
+    flex-direction:column;
+    margin-top:10px;
+    background:rgba(0,0,0,0.15);
+    padding:10px;
+    border-radius:10px;
+  }
+  nav ul.show{display:flex;}
+}
+
+/* Hero Section */
+.hero{
+  position: relative;
+  background:url('https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?auto=format&fit=crop&w=1400&q=60') center/cover;
+  border-radius:14px;
+  color:white;
+  padding:70px 30px;
+  margin-top:20px;
+  box-shadow:0 10px 28px rgba(0,0,0,0.25);
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5); /* Dark overlay for readability */
+  border-radius:14px;
+  z-index: 0;
+}
+.hero h1{font-size:42px; animation:fadeIn 1s ease forwards;}
+.hero p{max-width:650px;font-size:18px; animation:fadeIn 1.5s ease forwards;}
+.hero .cta-btn{
+  padding:10px 18px;
+  background:var(--accent);
+  border:none;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+  width:max-content;
+  animation:fadeIn 2s ease forwards;
+}
+
+/* Grid & Cards */
+.grid{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:20px;
+  margin-top:20px;
+}
+.card{
+  background:linear-gradient(145deg,#ffffff,#eef6ff);
+  border:1px solid #d8e7f5;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.06);
+  transition:.25s;
+  opacity:0;
+  transform:translateY(40px);
+}
+.card:hover{transform:scale(1.02);}
+.card.visible{opacity:1;transform:none;transition:0.6s ease-out;}
+
+/* Profile */
+.profile{display:flex;gap:14px;margin-top:14px}
+.avatar{
+  min-width:70px;min-height:70px;border-radius:10px;
+  background:var(--gradient);
+  display:flex;align-items:center;justify-content:center;
+  color:white;font-weight:700;font-size:20px;
+}
+
+/* Section Header */
+h2{
+  position:relative;
+  padding-bottom:8px;
+  margin-bottom:12px;
+}
+h2:after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:50px;
+  height:4px;
+  background:var(--accent);
+  border-radius:6px;
+}
+
+/* Back-to-top button */
+#backToTop{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:var(--gradient);
+  color:white;
+  padding:12px 16px;
+  border-radius:50%;
+  border:none;
+  font-size:20px;
+  cursor:pointer;
+  box-shadow:0 4px 14px rgba(0,0,0,0.25);
+  display:none;
+  z-index:2000;
+}
+
+/* Testimonials */
+.testimonials{margin-top:20px; display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+.testimonial-card{background:white;padding:16px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.06);}
+.testimonial-card p{font-style:italic; margin-bottom:8px;}
+.testimonial-card strong{display:block; text-align:right; color:var(--accent);}
+
+/* Contact Section */
+.contact{margin-top:20px;}
+.contact form{display:flex;flex-direction:column;gap:12px;}
+.contact input, .contact textarea{
+  padding:10px;
+  border-radius:6px;
+  border:1px solid #d8e7f5;
+  width:100%;
+}
+.contact button{
+  padding:10px 16px;
+  border:none;
+  border-radius:8px;
+  background:var(--accent);
+  color:white;
+  cursor:pointer;
+}
+
+/* Footer */
+footer{
+  margin-top:40px;
+  padding:25px;
+  text-align:center;
+  font-size:14px;
+  color:var(--muted);
+}
+
+/* Mobile Responsive */
+@media(max-width:880px){
+  .grid{grid-template-columns:1fr;}
+  .testimonials{grid-template-columns:1fr;}
+  nav ul{display:none;flex-direction:column;margin-top:10px;background:rgba(0,0,0,0.15);padding:10px;border-radius:10px;}
+  .menu-toggle{display:block;margin-left:auto;}
+}
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(15px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.analysis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.analysis-card {
+  background: linear-gradient(145deg,#ffffff,#eef6ff);
+  border: 1px solid #d8e7f5;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+.analysis-card:hover {
+  transform: scale(1.03);
+}
+
+.analysis-card h3 {
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 3000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background: white;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 600px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+
+.modal-content h3 {
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.close {
+  color: var(--accent);
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+/* Solutions Section Cards */
+.solutions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.solution-card {
+  background: linear-gradient(145deg,#ffffff,#eef6ff);
+  border: 1px solid #d8e7f5;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.solution-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.solution-card i {
+  font-size: 28px;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.solution-card h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #0b67a3;
+}
+
+.solution-card p {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container brand">
+    <div>
+      <h1 style="font-size:22px;margin:0">Political Dynasties</h1>
+    </div>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <nav id="main-nav" style="margin-left:auto">
+      <ul id="navList">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#owners">Team</a></li>
+        <li><a href="#analysis">Analysis</a></li>
+        <li><a href="#solutions">Solutions</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#sources"> Sources</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <section class="hero" id="home">
+    <h1><b>Understanding Political Dynasties</b></h1>
+    <p><b></b>Political dynasties are families where many members hold government positions. In the Philippines, this is common, and it can give certain families a lot of power. This can make elections less fair and sometimes lead to corruption. Studying political dynasties helps people understand how family influence affects politics and why laws, voter education, and transparency are important for a fair democracy.</p>
+    <button class="cta-btn" onclick="document.getElementById('owners').scrollIntoView({behavior:'smooth'})">Learn More</button>
+  </section>
+
+  <div class="profile-card" data-member="jm">
+  <div class="avatar"><img src="jm logo.jpg" alt="John Michael"></div>
+  <div>
+    <strong>John Michael S. Carig — Research Lead/Website Creator</strong>
+    <p style="color:var(--muted);font-size:14px">Digital media analysis & policy</p>
+  </div>
+</div>
+
+<div class="profile-card" data-member="juan">
+  <div class="avatar"><img src="avatar-juan.jpg" alt="Juan Morales"></div>
+  <div>
+    <strong>Juan Morales — Content & UX Designer</strong>
+    <p style="color:var(--muted);font-size:14px">Accessibility & visual design</p>
+  </div>
+</div>
+
+<div class="profile-card" data-member="rk">
+  <div class="avatar"><img src="avatar-rk.jpg" alt="Rhea Kim"></div>
+  <div>
+    <strong>Rhea Kim — Policy Analyst</strong>
+    <p style="color:var(--muted);font-size:14px">Legal frameworks & ethics</p>
+  </div>
+</div>
+
+<!-- Profile Modal -->
+<div id="profileModal" class="modal">
+  <div class="modal-content profile-modal-content">
+    <span class="close">&times;</span>
+    <div class="profile-modal-body">
+      <div class="avatar"><img id="modalAvatar" src="" alt="Profile"></div>
+      <h3 id="modalName"></h3>
+      <p id="modalRole" style="color:var(--muted);font-weight:500;"></p>
+      <p id="modalDesc"></p>
+    </div>
+  </div>
+</div>
+
+
+    <aside class="card">
+      <h2>Quick Facts</h2>
+      <ul>
+        <li>Misinformation reduces public trust.</li>
+        <li>Social media amplifies false narratives.</li>
+        <li>Media literacy helps prevent misinformation.</li>
+        <li>Fact-checking slows harmful content.</li>
+      </ul>
+    </aside>
+  </div>
+
+  <section class="card" id="analysis">
+  <h2>Analysis / The Issue — Political Dynasties in the Philippines</h2>
+  <div class="analysis-grid">
+    <div class="analysis-card" data-issue="highPrevalence">
+      <h3>High Prevalence</h3>
+      <p>Click to read more...</p>
+    </div>
+    <div class="analysis-card" data-issue="reducedCompetition">
+      <h3>Reduced Competition</h3>
+      <p>Click to read more...</p>
+    </div>
+    <div class="analysis-card" data-issue="patronageCorruption">
+      <h3>Patronage & Corruption</h3>
+      <p>Click to read more...</p>
+    </div>
+    <div class="analysis-card" data-issue="economicImpacts">
+      <h3>Economic Impacts</h3>
+      <p>Click to read more...</p>
+    </div>
+    <div class="analysis-card" data-issue="policyDebate">
+      <h3>Policy Debate</h3>
+      <p>Click to read more...</p>
+    </div>
+    <div class="analysis-card" data-issue="accountabilityGaps">
+      <h3>Accountability Gaps</h3>
+      <p>Click to read more...</p>
+</div>
+  </div>
+</section>
+
+<!-- Modal -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3 id="modal-title"></h3>
+    <p id="modal-text"></p>
+  </div>
+</div>
+
+<style>
+  .profile-card{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  cursor:pointer;
+  padding:12px;
+  border-radius:12px;
+  transition:0.3s;
+  background:white;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom:10px;
+}
+.profile-card:hover{
+  transform:scale(1.02);
+  box-shadow:0 8px 20px rgba(0,0,0,0.12);
+}
+.profile-card .avatar img{
+  width:70px;
+  height:70px;
+  border-radius:10px;
+  object-fit:cover;
+}
+
+/* Profile Modal */
+.profile-modal-content{
+  max-width:450px;
+  padding:30px;
+  text-align:center;
+}
+.profile-modal-body .avatar{
+  margin:0 auto 20px auto;
+  width:120px;
+  height:120px;
+  border-radius:12px;
+  overflow:hidden;
+}
+.profile-modal-body .avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.profile-modal-body h3{
+  margin-bottom:6px;
+  color:var(--accent);
+}
+.profile-modal-body p{
+  margin-bottom:8px;
+}
+.analysis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.analysis-card {
+  background: linear-gradient(145deg,#ffffff,#eef6ff);
+  border: 1px solid #d8e7f5;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+.analysis-card:hover {
+  transform: scale(1.03);
+}
+
+.analysis-card h3 {
+  color: #0b67a3;
+  margin-bottom: 8px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 3000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background: white;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 600px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+
+.modal-content h3 {
+  color: #0b67a3;
+  margin-bottom: 12px;
+}
+
+.close {
+  color: #0b67a3;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+</style>
+
+<script>
+  // Profile info data
+const profiles = {
+  jm: {
+    name: "John Michael S. Carig",
+    role: "Research Lead / Website Creator",
+    desc: "Digital media analysis & policy. Passionate about creating interactive web experiences and advocating for democratic awareness.",
+    avatar: "jm logo.jpg"
+  },
+  juan: {
+    name: "Juan Morales",
+    role: "Content & UX Designer",
+    desc: "Focused on accessibility & visual design to make information clear and engaging for all users.",
+    avatar: "avatar-juan.jpg"
+  },
+  rk: {
+    name: "Rhea Kim",
+    role: "Policy Analyst",
+    desc: "Specializes in legal frameworks & ethics. Ensures our research aligns with credible policy standards.",
+    avatar: "avatar-rk.jpg"
+  }
+};
+
+// Modal elements
+const profileModal = document.getElementById('profileModal');
+const modalAvatar = document.getElementById('modalAvatar');
+const modalName = document.getElementById('modalName');
+const modalRole = document.getElementById('modalRole');
+const modalDesc = document.getElementById('modalDesc');
+const modalClose = profileModal.querySelector('.close');
+
+// Open profile modal
+document.querySelectorAll('.profile-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const key = card.dataset.member;
+    const profile = profiles[key];
+    modalAvatar.src = profile.avatar;
+    modalName.textContent = profile.name;
+    modalRole.textContent = profile.role;
+    modalDesc.textContent = profile.desc;
+    profileModal.style.display = 'block';
+  });
+});
+
+// Close modal
+modalClose.addEventListener('click', ()=> profileModal.style.display = 'none');
+window.addEventListener('click', (e)=>{
+  if(e.target == profileModal) profileModal.style.display = 'none';
+});
+const issues = {
+  highPrevalence: {
+    title: "High Prevalence",
+    text: "The high prevalence of political dynasties in the Philippines means that a significant number of elected officials come from the same families. This concentration of power gives these families considerable influence over both local and national policies. With established networks, name recognition, and access to resources, dynastic politicians often have an electoral advantage, making it harder for new or independent candidates to compete. As a result, political opportunities are limited, and governance can sometimes prioritize family interests over public welfare, which may slow social and economic progress in areas dominated by political dynasties."
+  },
+  reducedCompetition: {
+    title: "Reduced Competition",
+    text: "Political dynasties often limit genuine electoral competition. Because members of influential families are well-known and have access to extensive resources and networks, it becomes difficult for newcomers or independent candidates to challenge them. Elections can then become contests of names rather than ideas or platforms, reducing voter choice and weakening democratic processes."
+  },
+  patronageCorruption: {
+    title: "Patronage & Corruption",
+    text: "Dynastic politics can encourage patronage systems, where family networks provide favors or resources in exchange for political support. This environment can foster nepotism and misuse of public funds, as officials may prioritize personal or family interests over public welfare. Such practices undermine transparency, accountability, and trust in government institutions."
+  },
+  economicImpacts: {
+    title: "Economic Impacts",
+    text: "Research shows that areas dominated by political dynasties sometimes experience persistent poverty and uneven economic development. Concentrated political power can lead to favoritism in resource allocation, giving advantages to businesses linked to political families while leaving other communities underserved. This can hinder inclusive growth and deepen social inequality."
+  },
+  policyDebate: {
+    title: "Policy Debate",
+    text: "Scholars and policymakers are divided on how to address political dynasties. Proponents argue that dynastic politicians can provide continuity and experience, and that voters still have the freedom to choose. Critics contend that dynasties obstruct democratic renewal and entrench inequality, calling for stronger legal measures, civic education, and electoral reforms to prevent excessive family control over politics."
+  },
+  accountabilityGaps: {   // note lowercase key to match data-issue
+    title: "Accountability Gaps",
+    text: "Political dynasties can create accountability gaps in governance. Family networks may protect members from scrutiny or legal consequences, making it difficult to hold officials responsible for poor performance or misconduct. This lack of accountability undermines the rule of law, weakens institutional checks and balances, and can perpetuate ineffective or corrupt governance."
+  }
+  };
+
+// Get modal elements
+const modal = document.getElementById('modal');
+const modalTitle = document.getElementById('modal-title');
+const modalText = document.getElementById('modal-text');
+const closeBtn = document.querySelector('.close');
+
+// Open modal when card clicked
+document.querySelectorAll('.analysis-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const issueKey = card.dataset.issue;
+    modalTitle.textContent = issues[issueKey].title;
+    modalText.textContent = issues[issueKey].text;
+    modal.style.display = 'block';
+  });
+});
+
+// Close modal
+closeBtn.addEventListener('click', () => modal.style.display = 'none');
+
+// Close when clicking outside modal
+window.addEventListener('click', (e) => {
+  if (e.target == modal) modal.style.display = 'none';
+});
+</script>
+
+  <section class="card" id="solutions">
+  <h2>Solutions / Recommendations</h2>
+  <div class="solutions-grid">
+    <div class="solution-card">
+      <i class="fas fa-gavel"></i>
+      <h3>Anti-Dynasty Law</h3>
+      <p>Prevent too many family members from holding power to ensure fair elections.</p>
+    </div>
+    <div class="solution-card">
+      <i class="fas fa-users"></i>
+      <h3>Strengthen Political Parties</h3>
+      <p>Encourage voting based on policies, not just family names.</p>
+    </div>
+    <div class="solution-card">
+      <i class="fas fa-hand-holding-usd"></i>
+      <h3>Campaign Finance Reform</h3>
+      <p>Reduce the advantage of wealthy political families during elections.</p>
+    </div>
+    <div class="solution-card">
+      <i class="fas fa-book-reader"></i>
+      <h3>Voter Education</h3>
+      <p>Teach citizens how dynasties affect governance and democracy.</p>
+    </div>
+    <div class="solution-card">
+      <i class="fas fa-eye"></i>
+      <h3>Transparency in Government</h3>
+      <p>Ensure public officials are accountable and actions are visible.</p>
+    </div>
+    <div class="solution-card">
+      <i class="fas fa-handshake"></i>
+      <h3>Reduce Patronage Politics</h3>
+      <p>Prevent officials from using government resources to control voters.</p>
+    </div>
+    <div class="solution-card">
+      <i class="fas fa-tv"></i>
+      <h3>Fair Media Coverage</h3>
+      <p>Give all candidates equal exposure, not just well-known families.</p>
+    </div>
+    <div class="solution-card">
+      <i class="fas fa-balance-scale"></i>
+      <h3>Strengthen Local Checks</h3>
+      <p>Prevent one family from controlling all local government positions.</p>
+    </div>
+    <div class="solution-card">
+      <i class="fas fa-balance-scale"></i>
+      <h3>Promote Civic Engagement</h3>
+      <p>Encourage citizens to actively participate in local governance, town halls, and policy discussions.</p>
+    </div>
+  </div>
+</section>
+
+  <section class="card contact" id="contact">
+    <h2>Contact Us</h2>
+    <form onsubmit="alert('Thank you for reaching out! 🌟');return false;">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Email" required>
+      <textarea placeholder="Message" rows="4" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <section class="card" id="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li><a href="https://iag.org.ph/think/1323-the-facts-on-political-dynasties" target="_blank" rel="noopener">Institute for Autonomy & Governance (2013). "The facts on political dynasties".</a></li>
+        <li><a href="https://democratic-erosion.org/2025/05/01/the-ruling-family-how-political-dynasties-are-destroying-democracy-in-the-philippines/" target="_blank" rel="noopener">Castro, K. (2025). "The Ruling Family: How Political Dynasties Are Destroying Democracy in the Philippines" — Democratic Erosion.</a></li>
+        <li><a href="https://www.sunstar.com.ph/davao/understanding-political-dynasty-in-the-philippines" target="_blank" rel="noopener">SunStar Davao. "Understanding political dynasty in the Philippines".</a></li>
+        <li><a href="https://www.asiamediacentre.org.nz/features/asias-political-dynasties-philippines" target="_blank" rel="noopener">Asia Media Centre. "Asia’s Political Dynasties: Philippines".</a></li>
+        <li><a href="https://www.sciencedirect.com/science/article/pii/S2667319322000222" target="_blank" rel="noopener">Cruz, et al. (2022). "Political dynasties, business, and poverty in the Philippines" — ScienceDirect.</a></li>
+    </ol>
+  </section>
+
+  <footer>
+    © <span id="year"></span> GEN002 — Democratic Awareness Project
+  </footer>
+</main>
+
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Toggle mobile menu
+function toggleMenu(){
+  const nav = document.getElementById('navList');
+  nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+}
+
+// Back-to-top visibility
+window.addEventListener('scroll', ()=>{
+  const btn = document.getElementById('backToTop');
+  btn.style.display = window.scrollY > 300 ? 'block' : 'none';
+});
+
+// Reveal animations
+const cards = document.querySelectorAll('.card, .hero');
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting) entry.target.classList.add('visible');
+  });
+},{threshold:0.2});
+cards.forEach(card=>observer.observe(card));
+</script>
+
+</body>
+</html>
